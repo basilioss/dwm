@@ -1,0 +1,449 @@
+From 5e489a57cdce6517996df26808b58bdd32bbd99f Mon Sep 17 00:00:00 2001
+From: howoz <howoz@airmail.cc>
+Date: Sun, 21 Nov 2021 16:23:04 +0300
+Subject: [PATCH] [dwm][patches][tab] i3 like tabs that cover the whole screen
+ width
+
+---
+ config.def.h |   9 +++
+ dwm.1        |  33 ++++++++---
+ dwm.c        | 160 +++++++++++++++++++++++++++++++++++++++++++++++----
+ 3 files changed, 183 insertions(+), 19 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index a2ac963..931d7ae 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -5,6 +5,13 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
+ static const unsigned int snap      = 32;       /* snap pixel */
+ static const int showbar            = 1;        /* 0 means no bar */
+ static const int topbar             = 1;        /* 0 means bottom bar */
++/*  Display modes of the tab bar: never shown, always shown, shown only in  */
++/*  monocle mode in the presence of several windows.                        */
++/*  Modes after showtab_nmodes are disabled.                                */
++enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
++static const int showtab			= showtab_auto;        /* Default tab bar show mode */
++static const int toptab				= False;               /* False means bottom tab bar */
++
+ static const char *fonts[]          = { "monospace:size=10" };
+ static const char dmenufont[]       = "monospace:size=10";
+ static const char col_gray1[]       = "#222222";
+@@ -65,6 +72,7 @@ static Key keys[] = {
+ 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+ 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+ 	{ MODKEY,                       XK_b,      togglebar,      {0} },
++	{ MODKEY,                       XK_w,      tabmode,        {-1} },
+ 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+ 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+ 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
+@@ -112,5 +120,6 @@ static Button buttons[] = {
+ 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
+ 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+ 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
++	{ ClkTabBar,            0,              Button1,        focuswin,       {0} },
+ };
+ 
+diff --git a/dwm.1 b/dwm.1
+index ddc8321..7752444 100644
+--- a/dwm.1
++++ b/dwm.1
+@@ -20,14 +20,22 @@ layout applied.
+ Windows are grouped by tags. Each window can be tagged with one or multiple
+ tags. Selecting certain tags displays all windows with these tags.
+ .P
+-Each screen contains a small status bar which displays all available tags, the
+-layout, the title of the focused window, and the text read from the root window
+-name property, if the screen is focused. A floating window is indicated with an
+-empty square and a maximised floating window is indicated with a filled square
+-before the windows title.  The selected tags are indicated with a different
+-color. The tags of the focused window are indicated with a filled square in the
+-top left corner.  The tags which are applied to one or more windows are
+-indicated with an empty square in the top left corner.
++Each screen contains two small status bars.
++.P
++One bar displays all available tags, the layout, the title of the focused
++window, and the text read from the root window name property, if the screen is
++focused. A floating window is indicated with an empty square and a maximised
++floating window is indicated with a filled square before the windows title.  The
++selected tags are indicated with a different color. The tags of the focused
++window are indicated with a filled square in the top left corner.  The tags
++which are applied to one or more windows are indicated with an empty square in
++the top left corner.
++.P
++Another bar contains a tab for each window of the current view and allows
++navigation between windows, especially in the monocle mode. The different
++display modes of this bar are described under the Mod1\-w Keybord command
++section.  When a single tag is selected, this tag is indicated in the left corner
++of the tab bar.
+ .P
+ dwm draws a small border around windows to indicate the focus state.
+ .SH OPTIONS
+@@ -44,7 +52,8 @@ command.
+ .TP
+ .B Button1
+ click on a tag label to display all windows with that tag, click on the layout
+-label toggles between tiled and floating layout.
++label toggles between tiled and floating layout, click on a window name in the
++tab bar brings focus to that window.
+ .TP
+ .B Button3
+ click on a tag label adds/removes all windows with that tag to/from the view.
+@@ -110,6 +119,12 @@ Increase master area size.
+ .B Mod1\-h
+ Decrease master area size.
+ .TP
++.B Mod1\-w
++Cycle over the tab bar display modes: never displayed, always displayed,
++displayed only in monocle mode when the view contains more than one window (auto
++mode). Some display modes can be disabled in the configuration, config.h. In
++the default configuration only "never" and "auto" display modes are enabled.
++.TP
+ .B Mod1\-Return
+ Zooms/cycles focused window to/from master area (tiled layouts only).
+ .TP
+diff --git a/dwm.c b/dwm.c
+index 5e4d494..8404747 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -64,7 +64,7 @@ enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
+        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
+        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
+ enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
+-enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
++enum { ClkTagBar, ClkTabBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
+        ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
+ 
+ typedef union {
+@@ -111,24 +111,32 @@ typedef struct {
+ 	void (*arrange)(Monitor *);
+ } Layout;
+ 
++#define MAXTABS 50
++
+ struct Monitor {
+ 	char ltsymbol[16];
+ 	float mfact;
+ 	int nmaster;
+ 	int num;
+ 	int by;               /* bar geometry */
++	int ty;               /* tab bar geometry */
+ 	int mx, my, mw, mh;   /* screen size */
+ 	int wx, wy, ww, wh;   /* window area  */
+ 	unsigned int seltags;
+ 	unsigned int sellt;
+ 	unsigned int tagset[2];
+ 	int showbar;
++	int showtab;
+ 	int topbar;
++	int toptab;
+ 	Client *clients;
+ 	Client *sel;
+ 	Client *stack;
+ 	Monitor *next;
+ 	Window barwin;
++	Window tabwin;
++	int ntabs;
++	int tab_widths[MAXTABS];
+ 	const Layout *lt[2];
+ };
+ 
+@@ -169,6 +177,7 @@ static void focus(Client *c);
+ static void focusin(XEvent *e);
+ static void focusmon(const Arg *arg);
+ static void focusstack(const Arg *arg);
++static void focuswin(const Arg* arg);
+ static Atom getatomprop(Client *c, Atom prop);
+ static int getrootptr(int *x, int *y);
+ static long getstate(Window w);
+@@ -207,6 +216,7 @@ static void seturgent(Client *c, int urg);
+ static void showhide(Client *c);
+ static void sigchld(int unused);
+ static void spawn(const Arg *arg);
++static void tabmode(const Arg *arg);
+ static void tag(const Arg *arg);
+ static void tagmon(const Arg *arg);
+ static void tile(Monitor *);
+@@ -241,6 +251,7 @@ static char stext[256];
+ static int screen;
+ static int sw, sh;           /* X display screen geometry width, height */
+ static int bh, blw = 0;      /* bar geometry */
++static int th = 0;           /* tab bar geometry */
+ static int lrpad;            /* sum of left and right padding for text */
+ static int (*xerrorxlib)(Display *, XErrorEvent *);
+ static unsigned int numlockmask = 0;
+@@ -393,8 +404,9 @@ arrange(Monitor *m)
+ }
+ 
+ void
+-arrangemon(Monitor *m)
+-{
++arrangemon(Monitor *m) {
++	updatebarpos(m);
++	XMoveResizeWindow(dpy, m->tabwin, m->wx, m->ty, m->ww, th);
+ 	strncpy(m->ltsymbol, m->lt[m->sellt]->symbol, sizeof m->ltsymbol);
+ 	if (m->lt[m->sellt]->arrange)
+ 		m->lt[m->sellt]->arrange(m);
+@@ -444,7 +456,24 @@ buttonpress(XEvent *e)
+ 			click = ClkStatusText;
+ 		else
+ 			click = ClkWinTitle;
+-	} else if ((c = wintoclient(ev->window))) {
++	}
++	if(ev->window == selmon->tabwin) {
++		i = 0; x = 0;
++		for(c = selmon->clients; c; c = c->next){
++			if(!ISVISIBLE(c)) continue;
++			x += selmon->tab_widths[i];
++			if (ev->x > x)
++				++i;
++			else
++				break;
++			if(i >= m->ntabs) break;
++		}
++		if(c) {
++			click = ClkTabBar;
++			arg.ui = i;
++		}
++	}
++	else if((c = wintoclient(ev->window))) {
+ 		focus(c);
+ 		restack(selmon);
+ 		XAllowEvents(dpy, ReplayPointer, CurrentTime);
+@@ -452,8 +481,9 @@ buttonpress(XEvent *e)
+ 	}
+ 	for (i = 0; i < LENGTH(buttons); i++)
+ 		if (click == buttons[i].click && buttons[i].func && buttons[i].button == ev->button
+-		&& CLEANMASK(buttons[i].mask) == CLEANMASK(ev->state))
+-			buttons[i].func(click == ClkTagBar && buttons[i].arg.i == 0 ? &arg : &buttons[i].arg);
++		&& CLEANMASK(buttons[i].mask) == CLEANMASK(ev->state)){
++			buttons[i].func(((click == ClkTagBar || click == ClkTabBar) && buttons[i].arg.i == 0) ? &arg : &buttons[i].arg);
++		}
+ }
+ 
+ void
+@@ -507,6 +537,8 @@ cleanupmon(Monitor *mon)
+ 	}
+ 	XUnmapWindow(dpy, mon->barwin);
+ 	XDestroyWindow(dpy, mon->barwin);
++	XUnmapWindow(dpy, mon->tabwin);
++	XDestroyWindow(dpy, mon->tabwin);
+ 	free(mon);
+ }
+ 
+@@ -638,7 +670,10 @@ createmon(void)
+ 	m->mfact = mfact;
+ 	m->nmaster = nmaster;
+ 	m->showbar = showbar;
++	m->showtab = showtab;
+ 	m->topbar = topbar;
++	m->toptab = toptab;
++	m->ntabs = 0;
+ 	m->lt[0] = &layouts[0];
+ 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
+ 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
+@@ -752,6 +787,56 @@ drawbars(void)
+ 		drawbar(m);
+ }
+ 
++void
++drawtabs(void) {
++	Monitor *m;
++
++	for(m = mons; m; m = m->next)
++		drawtab(m);
++}
++
++void
++drawtab(Monitor *m) {
++	Client *c;
++	int i;
++	int maxsize;
++	int remainder = 0;
++	int x = 0;
++	int w = 0;
++
++	/* Calculates number of labels and their width */
++	m->ntabs = 0;
++	for(c = m->clients; c; c = c->next){
++	  if(!ISVISIBLE(c)) continue;
++	  m->tab_widths[m->ntabs] = (int)TEXTW(c->name);
++	  ++m->ntabs;
++	  if(m->ntabs >= MAXTABS) break;
++	}
++
++	if(m->ntabs > 0) remainder = m->mw % m->ntabs;
++	maxsize = (1.0 / (double)m->ntabs) * m->mw;
++
++	i = 0;
++	int tm; /* middle of the tab*/
++	for(c = m->clients; c; c = c->next){
++	  if(!ISVISIBLE(c)) continue;
++	  if(i >= m->ntabs) break;
++	  m->tab_widths[i] = maxsize;
++	  /* add the remainder to the last tab so there is no leftover space left*/
++	  if(remainder && i == m->ntabs - 1) m->tab_widths[i] += remainder;
++	  w = m->tab_widths[i];
++	  drw_setscheme(drw, scheme[(c == m->sel) ? SchemeSel : SchemeNorm]);
++	  tm = (m->tab_widths[i] - (int)TEXTW(c->name)) / 2;
++	  tm = (int)TEXTW(c->name) >= m->tab_widths[i] ? lrpad / 2 : tm;
++	  drw_text(drw, x, 0, w, th, tm, c->name, 0);
++	  x += w;
++	  ++i;
++	}
++
++	drw_setscheme(drw, scheme[SchemeNorm]);
++	drw_map(drw, m->tabwin, 0, 0, m->mw, th);
++}
++
+ void
+ enternotify(XEvent *e)
+ {
+@@ -777,8 +862,10 @@ expose(XEvent *e)
+ 	Monitor *m;
+ 	XExposeEvent *ev = &e->xexpose;
+ 
+-	if (ev->count == 0 && (m = wintomon(ev->window)))
++	if(ev->count == 0 && (m = wintomon(ev->window))){
+ 		drawbar(m);
++		drawtab(m);
++	}
+ }
+ 
+ void
+@@ -804,6 +891,7 @@ focus(Client *c)
+ 	}
+ 	selmon->sel = c;
+ 	drawbars();
++	drawtabs();
+ }
+ 
+ /* there are some broken focus acquiring clients needing extra handling */
+@@ -856,6 +944,19 @@ focusstack(const Arg *arg)
+ 	}
+ }
+ 
++void
++focuswin(const Arg* arg){
++  int iwin = arg->i;
++  Client* c = NULL;
++  for(c = selmon->clients; c && (iwin || !ISVISIBLE(c)) ; c = c->next){
++    if(ISVISIBLE(c)) --iwin;
++  };
++  if(c) {
++    focus(c);
++    restack(selmon);
++  }
++}
++
+ Atom
+ getatomprop(Client *c, Atom prop)
+ {
+@@ -1234,12 +1335,14 @@ propertynotify(XEvent *e)
+ 		case XA_WM_HINTS:
+ 			updatewmhints(c);
+ 			drawbars();
++			drawtabs();
+ 			break;
+ 		}
+ 		if (ev->atom == XA_WM_NAME || ev->atom == netatom[NetWMName]) {
+ 			updatetitle(c);
+ 			if (c == c->mon->sel)
+ 				drawbar(c->mon);
++			drawtab(c->mon);
+ 		}
+ 		if (ev->atom == netatom[NetWMWindowType])
+ 			updatewindowtype(c);
+@@ -1353,6 +1456,7 @@ restack(Monitor *m)
+ 	XWindowChanges wc;
+ 
+ 	drawbar(m);
++	drawtab(m);
+ 	if (!m->sel)
+ 		return;
+ 	if (m->sel->isfloating || !m->lt[m->sellt]->arrange)
+@@ -1547,6 +1651,7 @@ setup(void)
+ 		die("no fonts could be loaded.");
+ 	lrpad = drw->fonts->h;
+ 	bh = drw->fonts->h + 2;
++	th = bh;
+ 	updategeom();
+ 	/* init atoms */
+ 	utf8string = XInternAtom(dpy, "UTF8_STRING", False);
+@@ -1708,6 +1813,17 @@ togglebar(const Arg *arg)
+ 	arrange(selmon);
+ }
+ 
++void
++tabmode(const Arg *arg)
++{
++	if(arg && arg->i >= 0)
++		selmon->showtab = arg->ui % showtab_nmodes;
++	else
++		selmon->showtab = (selmon->showtab + 1 ) % showtab_nmodes;
++	arrange(selmon);
++}
++
++
+ void
+ togglefloating(const Arg *arg)
+ {
+@@ -1819,6 +1935,11 @@ updatebars(void)
+ 				CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
+ 		XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
+ 		XMapRaised(dpy, m->barwin);
++		m->tabwin = XCreateWindow(dpy, root, m->wx, m->ty, m->ww, th, 0, DefaultDepth(dpy, screen),
++						CopyFromParent, DefaultVisual(dpy, screen),
++						CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
++		XDefineCursor(dpy, m->tabwin, cursor[CurNormal]->cursor);
++		XMapRaised(dpy, m->tabwin);
+ 		XSetClassHint(dpy, m->barwin, &ch);
+ 	}
+ }
+@@ -1826,14 +1947,33 @@ updatebars(void)
+ void
+ updatebarpos(Monitor *m)
+ {
++	Client *c;
++	int nvis = 0;
++
+ 	m->wy = m->my;
+ 	m->wh = m->mh;
+ 	if (m->showbar) {
+ 		m->wh -= bh;
+ 		m->by = m->topbar ? m->wy : m->wy + m->wh;
+-		m->wy = m->topbar ? m->wy + bh : m->wy;
+-	} else
++		if ( m->topbar )
++			m->wy += bh;
++	} else {
+ 		m->by = -bh;
++	}
++
++	for(c = m->clients; c; c = c->next) {
++		if(ISVISIBLE(c)) ++nvis;
++	}
++
++	if(m->showtab == showtab_always
++	   || ((m->showtab == showtab_auto) && (nvis > 1) && (m->lt[m->sellt]->arrange == monocle))) {
++		m->wh -= th;
++		m->ty = m->toptab ? m->wy : m->wy + m->wh;
++		if ( m->toptab )
++			m->wy += th;
++	} else {
++		m->ty = -th;
++	}
+ }
+ 
+ void
+@@ -2070,7 +2210,7 @@ wintomon(Window w)
+ 	if (w == root && getrootptr(&x, &y))
+ 		return recttomon(x, y, 1, 1);
+ 	for (m = mons; m; m = m->next)
+-		if (w == m->barwin)
++		if (w == m->barwin || w == m->tabwin)
+ 			return m;
+ 	if ((c = wintoclient(w)))
+ 		return c->mon;
+-- 
+2.34.0
+
