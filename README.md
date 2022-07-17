@@ -2,7 +2,7 @@
 
 [dwm](https://dwm.suckless.org/) is an extremely fast, small, and dynamic window manager for X.
 
-![image](https://user-images.githubusercontent.com/71596800/179394449-4b26e569-fbdc-4c54-97c9-bb59e0ef1384.png)
+![image](https://user-images.githubusercontent.com/71596800/179394535-948205b3-b093-43ef-8779-347413ec1883.png)
 
 ## Patches
 
