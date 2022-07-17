@@ -1,6 +1,8 @@
 # dwm
 
-dwm is an extremely fast, small, and dynamic window manager for X.
+[dwm](https://dwm.suckless.org/) is an extremely fast, small, and dynamic window manager for X.
+
+![image](https://user-images.githubusercontent.com/71596800/179394535-948205b3-b093-43ef-8779-347413ec1883.png)
 
 ## Patches
 
@@ -21,7 +23,7 @@ dwm is an extremely fast, small, and dynamic window manager for X.
 ## Requirements
 
 - JetbrainsMono Nerd Font or any nerd font but dont forget to set it in config.def.h
-- [slstatus](https://github.com/basilioss/slstatus) for status bar
+- [slstatus](https://github.com/basilioss/slstatus) for status bar (optional)
 - If dwm crash on startup, try to install `libxft-bgra` to properly render emoji in the status/info bar
 
 ## Keybindings
