@@ -22,7 +22,6 @@
 
 ## Requirements
 
-- JetbrainsMono Nerd Font or any nerd font but dont forget to set it in config.def.h
 - [slstatus](https://github.com/basilioss/slstatus) for status bar (optional)
 - If dwm crash on startup, try to install `libxft-bgra` to properly render emoji in the status/info bar
 
