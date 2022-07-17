@@ -34,7 +34,6 @@ static const char norm_bg[] = "#17212b";
 static const char norm_border[] = "#3b5b77";
 static const char sel_fg[] = "#5c7aea";
 static const char sel_bg[] = "#17212b";
-/*static const char sel_border[] = "#8dc0ed";*/
 static const char sel_border[] = "#638ccc";
 
 static const char *colors[][3]      = {
@@ -115,154 +114,154 @@ static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x20"
 
 
 static Key keys[] = {
-	/* modifier                     key        function        argument */
+    /* modifier                     key        function        argument */
     /* Dmenu */
-	{ MODKEY,                       XK_space,      spawn,          {.v = dmenucmd } },
-  	/* Lanunch terminal	*/
-	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+    { MODKEY,                       XK_space,      spawn,          {.v = dmenucmd } },
+    /* Lanunch terminal	*/
+    { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     /* Launch scratchpad */
-	{ MODKEY|ShiftMask,             XK_Return,  togglescratch,  {.v = scratchpadcmd } },
-   	/* Toggle status bar	*/
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+    { MODKEY|ShiftMask,             XK_Return,  togglescratch,  {.v = scratchpadcmd } },
+    /* Toggle status bar	*/
+    { MODKEY,                       XK_b,      togglebar,      {0} },
     /* Tab bar */
-	{ MODKEY|ShiftMask,             XK_r,      tabmode,        {-1} },
- 	/* Move to another terminal 	*/
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-  	/* Move to another ternminal	*/
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-   	/* Increase the amount of windows in master area */
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-   	/* Decrease the amount of windows in master area	*/
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-   	/* Make the primary area smaller */
-	{ MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
-   	/* Make the primary area larger */
-	{ MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
-   	/* Toggle master and stack	*/
-	{ MODKEY,                       XK_f,      zoom,           {0} },
+    { MODKEY|ShiftMask,             XK_r,      tabmode,        {-1} },
+    /* Move to another terminal 	*/
+    { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+    /* Move to another ternminal	*/
+    { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+    /* Increase the amount of windows in master area */
+    { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
+    /* Decrease the amount of windows in master area	*/
+    { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+    /* Make the primary area smaller */
+    { MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
+    /* Make the primary area larger */
+    { MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
+    /* Toggle master and stack	*/
+    { MODKEY,                       XK_f,      zoom,           {0} },
     /* Increase all gaps */
-	{ MODKEY,                       XK_equal,      incrgaps,       {.i = +1 } },
-	/* Decrease all gaps*/
+    { MODKEY,                       XK_equal,      incrgaps,       {.i = +1 } },
+    /* Decrease all gaps*/
     { MODKEY,                       XK_minus,      incrgaps,       {.i = -1 } },
     /* Increase inner gaps */
-	/* { MODKEY|Mod1Mask,              XK_i,      incrigaps,      {.i = +1 } },*/
+    /* { MODKEY|Mod1Mask,              XK_i,      incrigaps,      {.i = +1 } },*/
     /* Decrease inner gaps */
-	/* { MODKEY|Mod1Mask|ShiftMask,    XK_i,      incrigaps,      {.i = -1 } },*/
+    /* { MODKEY|Mod1Mask|ShiftMask,    XK_i,      incrigaps,      {.i = -1 } },*/
     /*  Increase outer gaps */
-	/* { MODKEY|Mod1Mask,              XK_o,      incrogaps,      {.i = +1 } },*/
+    /* { MODKEY|Mod1Mask,              XK_o,      incrogaps,      {.i = +1 } },*/
     /*  Decrease outer gaps */
-	/* { MODKEY|Mod1Mask|ShiftMask,    XK_o,      incrogaps,      {.i = -1 } },*/
+    /* { MODKEY|Mod1Mask|ShiftMask,    XK_o,      incrogaps,      {.i = -1 } },*/
     /*  Increase inner horizontal gaps */
-	/* { MODKEY|Mod1Mask,              XK_6,      incrihgaps,     {.i = +1 } },*/
+    /* { MODKEY|Mod1Mask,              XK_6,      incrihgaps,     {.i = +1 } },*/
     /*  Decrease inner horizontal gaps */
-	/* { MODKEY|Mod1Mask|ShiftMask,    XK_6,      incrihgaps,     {.i = -1 } },*/
+    /* { MODKEY|Mod1Mask|ShiftMask,    XK_6,      incrihgaps,     {.i = -1 } },*/
     /*  Increase inner vertical gaps */
-	/* { MODKEY|Mod1Mask,              XK_7,      incrivgaps,     {.i = +1 } },*/
+    /* { MODKEY|Mod1Mask,              XK_7,      incrivgaps,     {.i = +1 } },*/
     /*  Decrease inner vertical gaps */
-	/* { MODKEY|Mod1Mask|ShiftMask,    XK_7,      incrivgaps,     {.i = -1 } },*/
+    /* { MODKEY|Mod1Mask|ShiftMask,    XK_7,      incrivgaps,     {.i = -1 } },*/
     /*  Increase outer horizontal gaps */
-	/* { MODKEY|Mod1Mask,              XK_8,      incrohgaps,     {.i = +1 } },*/
+    /* { MODKEY|Mod1Mask,              XK_8,      incrohgaps,     {.i = +1 } },*/
     /*  Decrease outer horizontal gaps */
-	/* { MODKEY|Mod1Mask|ShiftMask,    XK_8,      incrohgaps,     {.i = -1 } },*/
+    /* { MODKEY|Mod1Mask|ShiftMask,    XK_8,      incrohgaps,     {.i = -1 } },*/
     /*  Increase outer vertical gaps */
-	/* { MODKEY|Mod1Mask,              XK_9,      incrovgaps,     {.i = +1 } },*/
+    /* { MODKEY|Mod1Mask,              XK_9,      incrovgaps,     {.i = +1 } },*/
     /*  Decrease outer vertical gaps */
-	/* { MODKEY|Mod1Mask|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },*/
+    /* { MODKEY|Mod1Mask|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },*/
     /*  Toggle gaps */
-	/* { MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },*/
+    /* { MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },*/
     /* Reset gaps back to default */
-	{ MODKEY|ShiftMask,             XK_equal,      defaultgaps,    {0} },
-   	/* Cycle through the two last tags	*/
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-   	/* Kill a window	*/
-	{ MODKEY,                       XK_q,      killclient,     {0} },
-   	/* Tiled layout	*/
-	{ MODKEY,                       XK_w,      setlayout,      {.v = &layouts[0]} },
-	/* Floating layout	*/
-	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[1]} },
-	/* Monocle layout	*/
-	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[2]} },
+    { MODKEY|ShiftMask,             XK_equal,      defaultgaps,    {0} },
+    /* Cycle through the two last tags	*/
+    { MODKEY,                       XK_Tab,    view,           {0} },
+    /* Kill a window	*/
+    { MODKEY,                       XK_q,      killclient,     {0} },
+    /* Tiled layout	*/
+    { MODKEY,                       XK_w,      setlayout,      {.v = &layouts[0]} },
+    /* Floating layout	*/
+    { MODKEY,                       XK_e,      setlayout,      {.v = &layouts[1]} },
+    /* Monocle layout	*/
+    { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[2]} },
     /* Spiral layout */
-	/*{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },*/
+    /* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },*/
     /* Dwindle layout */
-	/*{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[4]} },*/
+    /* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[4]} },*/
     /* Deck layout */
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[5]} },
+    { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[5]} },
     /* Bstack layout */
-	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[6]} },
+    { MODKEY,                       XK_y,      setlayout,      {.v = &layouts[6]} },
     /* Bstackhoriz layout */
-	/* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[7]} },*/
+    /* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[7]} },*/
     /* Grid layout */
-	/* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[8]} },*/
+    /* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[8]} },*/
     /* Nrowgrid layout */
-	/* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[9]} },*/
+    /* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[9]} },*/
     /* Horizgrid layout */
-	/* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[10]} },*/
+    /* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[10]} },*/
     /* Gaplessgrid layout */
-	/* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[11]} },*/
+    /* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[11]} },*/
     /* Centeredmaster layout */
-	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[12]} },
+    { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[12]} },
     /* Centeredfloatingmaster layout */
-	/* { MODKEY,                     XK_r,      setlayout,      {.v = &layouts[13]} },*/
-	/* Cycle through the two last layouts	*/
-	{ MODKEY|ShiftMask,             XK_w,  setlayout,      {0} },
-	/* Toggle floating mode on the active window	*/
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	/* Show all windows	*/
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	/* Move a window to all tags	*/
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	/* Move focus to the other monitor */
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	/* Move focus to the other monitor */
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	/* Move the active window to the other monitor */
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	/* Move the active window to the other monitor */
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-  	/* Move to the next tag */
-	{ MODKEY,            	        XK_n,      shiftview,	   { .i = +1 } },
-	/* Move to the previous tag */
-	{ MODKEY,                       XK_p,      shiftview,	   { .i = -1 } },
+    /* { MODKEY,                     XK_r,      setlayout,      {.v = &layouts[13]} },*/
+    /* Cycle through the two last layouts	*/
+    { MODKEY|ShiftMask,             XK_w,  setlayout,      {0} },
+    /* Toggle floating mode on the active window	*/
+    { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+    /* Show all windows	*/
+    { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
+    /* Move a window to all tags	*/
+    { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+    /* Move focus to the other monitor */
+    { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+    /* Move focus to the other monitor */
+    { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+    /* Move the active window to the other monitor */
+    { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+    /* Move the active window to the other monitor */
+    { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+    /* Move to the next tag */
+    { MODKEY,            	        XK_n,      shiftview,	   { .i = +1 } },
+    /* Move to the previous tag */
+    { MODKEY,                       XK_p,      shiftview,	   { .i = -1 } },
     /* Navigate tags */
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
-	/* Quit DWM	*/
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+    TAGKEYS(                        XK_1,                      0)
+    TAGKEYS(                        XK_2,                      1)
+    TAGKEYS(                        XK_3,                      2)
+    TAGKEYS(                        XK_4,                      3)
+    TAGKEYS(                        XK_5,                      4)
+    TAGKEYS(                        XK_6,                      5)
+    TAGKEYS(                        XK_7,                      6)
+    TAGKEYS(                        XK_8,                      7)
+    TAGKEYS(                        XK_9,                      8)
+    /* Quit DWM	*/
+    { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
- 	/* [left mouse button on layout tag] - cycle through the two last layouts */
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-   	/* [middle mouse button on window title] - toggle master and stack */
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	/* [middle mouse button on status text] - open the terminal */
+    /* [left mouse button on layout tag] - cycle through the two last layouts */
+    { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
+    { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+    { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+    /* [middle mouse button on window title] - toggle master and stack */
+    { ClkWinTitle,          0,              Button2,        zoom,           {0} },
+    /* [middle mouse button on status text] - open the terminal */
     { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-	/* [MODKEY] + [left mouse button on window] - move window */
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	/* [MODKEY] + [middle mouse button on window] - toogle window in being floating */
+    /* [MODKEY] + [left mouse button on window] - move window */
+    { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
+    /* [MODKEY] + [middle mouse button on window] - toogle window in being floating */
     { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
     /* [MODKEY] + [right mouse button on window] - resize window */
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-	{ ClkTabBar,            0,              Button1,        focuswin,       {0} },
+    { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+    { ClkTagBar,            0,              Button1,        view,           {0} },
+    { ClkTagBar,            0,              Button3,        toggleview,     {0} },
+    { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+    { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+    { ClkTabBar,            0,              Button1,        focuswin,       {0} },
     /* Shift view */
     { ClkTagBar,            0,              Button4,        shiftview,     { .i = -1 } },
-	{ ClkTagBar,            0,              Button5,        shiftview,     { .i = +1 } },
+    { ClkTagBar,            0,              Button5,        shiftview,     { .i = +1 } },
 };
 
