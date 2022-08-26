@@ -19,8 +19,8 @@ FREETYPELIBS = -lfontconfig -lXft
 FREETYPEINC = /usr/include/freetype2
 # OpenBSD (uncomment)
 #FREETYPEINC = ${X11INC}/freetype2
-#KVMLIB = -lkvm
 #MANPREFIX = ${PREFIX}/man
+#KVMLIB = -lkvm
 
 # includes and libs
 INCS = -I${X11INC} -I${FREETYPEINC}

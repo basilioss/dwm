@@ -23,8 +23,9 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
 
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=12", "JoyPixels:pixelsize=12:antialias=true:autohint=true", "monospace:size=12" };
-static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=12" ;
+/* Some app's icons may not work properly with 11-12 font size in the system tray */
+static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "JoyPixels:pixelsize=13:antialias=true:autohint=true", "monospace:size=13" };
+static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=13" ;
 
 /* Pywal */
 /* #include "/home/basilios/.cache/wal/colors-wal-dwm.h" */
@@ -74,6 +75,7 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
+#include "shiftview.c"
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -111,7 +113,6 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont 
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x20", NULL };
-
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
@@ -264,4 +265,3 @@ static Button buttons[] = {
     { ClkTagBar,            0,              Button4,        shiftview,     { .i = -1 } },
     { ClkTagBar,            0,              Button5,        shiftview,     { .i = +1 } },
 };
-
