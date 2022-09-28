@@ -1,8 +1,6 @@
 # dwm
 
-[dwm](https://dwm.suckless.org/) is an extremely fast, small, and dynamic window manager for X.
-
-![image](https://user-images.githubusercontent.com/71596800/179394535-948205b3-b093-43ef-8779-347413ec1883.png)
+![dwm](https://user-images.githubusercontent.com/71596800/192819493-d050a256-f8f2-48ff-99c9-59159b632d50.png)
 
 ## Patches
 
@@ -19,6 +17,7 @@
 - [underlinetags](https://dwm.suckless.org/patches/underlinetags/)
 - [vanitygaps](https://dwm.suckless.org/patches/vanitygaps/): gaps + tile, bstack, bstackhoriz, centeredmaster, centeredfloatingmaster, deck, fibonacci (dwindle, spiral), grid and nrowgrid layouts.  By default some of them are disabled
 - [shiftview](https://dwm.suckless.org/patches/nextprev/): cycle through tags
+- [resizecorners](https://dwm.suckless.org/patches/resizecorners/): resize windows from each corner
 
 ## Requirements
 
