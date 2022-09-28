@@ -33,9 +33,9 @@ static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=13" ;
 static const char norm_fg[] = "#ffffff";
 static const char norm_bg[] = "#17212b";
 static const char norm_border[] = "#3b5b77";
-static const char sel_fg[] = "#5c7aea";
+static const char sel_fg[] = "#5fafff";
 static const char sel_bg[] = "#17212b";
-static const char sel_border[] = "#638ccc";
+static const char sel_border[] = "#5fafff";
 
 static const char *colors[][3]      = {
     /*               fg           bg         border                         */
@@ -44,7 +44,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6" };
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7" };
 
 static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
