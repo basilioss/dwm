@@ -7,8 +7,10 @@
 - [alwayscenter](https://dwm.suckless.org/patches/alwayscenter/): center all floating windows
 - [hide vacant tags](https://dwm.suckless.org/patches/hide_vacant_tags/)
 - [monoclesymbol](https://dwm.suckless.org/patches/monoclesymbol/): hide the number of open clients in the current tag in monocle layout
+- [moveresize](https://dwm.suckless.org/patches/moveresize/): move and resize dwm's floating windows using keyboard bindings
 - [noborder](https://dwm.suckless.org/patches/noborder/): remove the border when there is only one window visible
 - [pertag](https://dwm.suckless.org/patches/pertag/): keeps layout, mwfact, barpos and nmaster per tag
+- [resizecorners](https://dwm.suckless.org/patches/resizecorners/): resize windows from each corner
 - [scratchpad](https://dwm.suckless.org/patches/scratchpad/)
 - [swallow](https://dwm.suckless.org/patches/swallow/): this patch helps users spawning a lot of graphical programs from their command line by avoiding cluttering the screen with many unusable terminals
 - [systray](https://dwm.suckless.org/patches/systray/)
@@ -17,7 +19,6 @@
 - [underlinetags](https://dwm.suckless.org/patches/underlinetags/)
 - [vanitygaps](https://dwm.suckless.org/patches/vanitygaps/): gaps + tile, bstack, bstackhoriz, centeredmaster, centeredfloatingmaster, deck, fibonacci (dwindle, spiral), grid and nrowgrid layouts.  By default some of them are disabled
 - [shiftview](https://dwm.suckless.org/patches/nextprev/): cycle through tags
-- [resizecorners](https://dwm.suckless.org/patches/resizecorners/): resize windows from each corner
 
 ## Requirements
 

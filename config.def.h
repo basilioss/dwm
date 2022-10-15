@@ -31,10 +31,10 @@ static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=13" ;
 /* #include "/home/basilios/.cache/wal/colors-wal-dwm.h" */
 
 static const char norm_fg[] = "#ffffff";
-static const char norm_bg[] = "#17212b";
+static const char norm_bg[] = "#151f29";
 static const char norm_border[] = "#3b5b77";
 static const char sel_fg[] = "#5fafff";
-static const char sel_bg[] = "#17212b";
+static const char sel_bg[] = "#151f29";
 static const char sel_border[] = "#5fafff";
 
 static const char *colors[][3]      = {
@@ -224,6 +224,26 @@ static Key keys[] = {
     { MODKEY,            	        XK_n,      shiftview,	   { .i = +1 } },
     /* Move to the previous tag */
     { MODKEY,                       XK_p,      shiftview,	   { .i = -1 } },
+    /* Move floating windows */
+    { MODKEY,                       XK_Down,   moveresize,     {.v = "0x 25y 0w 0h" } },
+    { MODKEY,                       XK_Up,     moveresize,     {.v = "0x -25y 0w 0h" } },
+    { MODKEY,                       XK_Right,  moveresize,     {.v = "25x 0y 0w 0h" } },
+    { MODKEY,                       XK_Left,   moveresize,     {.v = "-25x 0y 0w 0h" } },
+    /* Resize floating windows */
+    { MODKEY|ShiftMask,             XK_Down,   moveresize,     {.v = "0x 0y 0w 25h" } },
+    { MODKEY|ShiftMask,             XK_Up,     moveresize,     {.v = "0x 0y 0w -25h" } },
+    { MODKEY|ShiftMask,             XK_Right,  moveresize,     {.v = "0x 0y 25w 0h" } },
+    { MODKEY|ShiftMask,             XK_Left,   moveresize,     {.v = "0x 0y -25w 0h" } },
+    /* Move floating windows to edge of screen */
+    { MODKEY|ControlMask,           XK_Up,     moveresizeedge, {.v = "t"} },
+    { MODKEY|ControlMask,           XK_Down,   moveresizeedge, {.v = "b"} },
+    { MODKEY|ControlMask,           XK_Left,   moveresizeedge, {.v = "l"} },
+    { MODKEY|ControlMask,           XK_Right,  moveresizeedge, {.v = "r"} },
+    /* Resize floating windows to edge of screen */
+    { MODKEY|ControlMask|ShiftMask, XK_Up,     moveresizeedge, {.v = "T"} },
+    { MODKEY|ControlMask|ShiftMask, XK_Down,   moveresizeedge, {.v = "B"} },
+    { MODKEY|ControlMask|ShiftMask, XK_Left,   moveresizeedge, {.v = "L"} },
+    { MODKEY|ControlMask|ShiftMask, XK_Right,  moveresizeedge, {.v = "R"} },
     /* Navigate tags */
     TAGKEYS(                        XK_1,                      0)
     TAGKEYS(                        XK_2,                      1)
