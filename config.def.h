@@ -1,18 +1,18 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static const unsigned int gappih    = 8;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 8;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 8;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 8;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 9;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 9;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 9;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 9;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 /*  Display modes of the tab bar: never shown, always shown, shown only in  */
 /*  monocle mode in the presence of several windows.                        */
 /*  Modes after showtab_nmodes are disabled.                                */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
-static const int showtab			= showtab_auto;        /* Default tab bar show mode */
+static const int showtab			= showtab_never;        /* Default tab bar show mode */
 static const int toptab				= False;               /* False means bottom tab bar */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
@@ -32,7 +32,7 @@ static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=13" ;
 
 static const char norm_fg[] = "#ffffff";
 static const char norm_bg[] = "#151f29";
-static const char norm_border[] = "#3b5b77";
+static const char norm_border[] = "#233343";
 static const char sel_fg[] = "#5fafff";
 static const char sel_bg[] = "#151f29";
 static const char sel_border[] = "#5fafff";
@@ -61,7 +61,7 @@ static const Rule rules[] = {
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
     { "Deadbeef",    	 NULL,     NULL,           0,         1,          0,           0,        -1 },
     { "KeePassXC",       NULL,     NULL,           0,         1,          0,           0,        -1 },
-    { "librewolf",		 NULL,     NULL,           1 << 1,    0,          0,          -1,        -1 },
+    { "LibreWolf",		 NULL,     NULL,           1 << 1,    0,          0,          -1,        -1 },
     { "st",     		 NULL,     NULL,           0,         0,          1,           0,        -1 },
     { "TelegramDesktop", NULL,     NULL,           0,         1,          0,           0,        -1 },
     { NULL,     		 NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
@@ -117,7 +117,7 @@ static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x20"
 static Key keys[] = {
     /* modifier                     key        function        argument */
     /* Dmenu */
-    { MODKEY,                       XK_space,      spawn,          {.v = dmenucmd } },
+    { Mod1Mask,                       XK_space,      spawn,          {.v = dmenucmd } },
     /* Lanunch terminal	*/
     { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     /* Launch scratchpad */
