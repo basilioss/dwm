@@ -21,9 +21,6 @@ static const int topbar             = 1;     /* 0 means bottom bar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "JoyPixels:pixelsize=13:antialias=true:autohint=true", "monospace:size=13" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=13" ;
 
-/* Pywal */
-/* #include "/home/basilios/.cache/wal/colors-wal-dwm.h" */
-
 static const char norm_fg[] = "#ffffff";
 static const char norm_bg[] = "#151f29";
 static const char norm_border[] = "#233343";
