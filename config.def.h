@@ -8,12 +8,6 @@ static const unsigned int gappiv    = 9;       /* vert inner gap between windows
 static const unsigned int gappoh    = 9;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 9;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
-/*  Display modes of the tab bar: never shown, always shown, shown only in  */
-/*  monocle mode in the presence of several windows.                        */
-/*  Modes after showtab_nmodes are disabled.                                */
-enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
-static const int showtab			= showtab_never;        /* Default tab bar show mode */
-static const int toptab				= False;               /* False means bottom tab bar */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
@@ -61,7 +55,7 @@ static const Rule rules[] = {
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
     { "Deadbeef",    	 NULL,     NULL,           0,         1,          0,           0,        -1 },
     { "KeePassXC",       NULL,     NULL,           0,         1,          0,           0,        -1 },
-    { "LibreWolf",		 NULL,     NULL,           1 << 1,    0,          0,          -1,        -1 },
+    { "firefox",		 NULL,     NULL,           1 << 1,    0,          0,          -1,        -1 },
     { "st",     		 NULL,     NULL,           0,         0,          1,           0,        -1 },
     { "TelegramDesktop", NULL,     NULL,           0,         1,          0,           0,        -1 },
     { NULL,     		 NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
@@ -124,8 +118,6 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_Return,  togglescratch,  {.v = scratchpadcmd } },
     /* Toggle status bar	*/
     { MODKEY,                       XK_b,      togglebar,      {0} },
-    /* Tab bar */
-    { MODKEY|ShiftMask,             XK_r,      tabmode,        {-1} },
     /* Move to another terminal 	*/
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
     /* Move to another ternminal	*/
@@ -280,7 +272,6 @@ static Button buttons[] = {
     { ClkTagBar,            0,              Button3,        toggleview,     {0} },
     { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-    { ClkTabBar,            0,              Button1,        focuswin,       {0} },
     /* Shift view */
     { ClkTagBar,            0,              Button4,        shiftview,     { .i = -1 } },
     { ClkTagBar,            0,              Button5,        shiftview,     { .i = +1 } },
