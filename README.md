@@ -1,7 +1,5 @@
 # dwm
 
-![dwm](https://user-images.githubusercontent.com/71596800/192819493-d050a256-f8f2-48ff-99c9-59159b632d50.png)
-
 ## Patches
 
 - [alwayscenter](https://dwm.suckless.org/patches/alwayscenter/): center all floating windows
