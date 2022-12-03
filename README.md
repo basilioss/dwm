@@ -12,14 +12,8 @@
 - [swallow](https://dwm.suckless.org/patches/swallow/): this patch helps users spawning a lot of graphical programs from their command line by avoiding cluttering the screen with many unusable terminals
 - [systray](https://dwm.suckless.org/patches/systray/)
 - [truecenteredtitle](https://dwm.suckless.org/patches/truecenteredtitle/): center window title
-- [underlinetags](https://dwm.suckless.org/patches/underlinetags/)
 - [vanitygaps](https://dwm.suckless.org/patches/vanitygaps/): gaps + tile, bstack, bstackhoriz, centeredmaster, centeredfloatingmaster, deck, fibonacci (dwindle, spiral), grid and nrowgrid layouts.  By default some of them are disabled
 - [shiftview](https://dwm.suckless.org/patches/nextprev/): cycle through tags
-
-## Requirements
-
-- [slstatus](https://github.com/basilioss/slstatus) for status bar (optional)
-- If dwm crash on startup, try to install `libxft-bgra` to properly render emoji in the status/info bar
 
 ## Keybindings
 
@@ -32,6 +26,8 @@ git clone https://github.com/basilioss/dwm
 cd dwm
 sudo make install
 ```
+
+Optionally install [slstatus](https://github.com/basilioss/slstatus) for status bar.
 
 ## Recompile
 
