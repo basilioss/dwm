@@ -27,15 +27,6 @@ cd dwm
 sudo make install
 ```
 
+If you've never compiled dwm before, have a look at this guide: https://github.com/sineemore/suckless-101/.
+
 Optionally install [slstatus](https://github.com/basilioss/slstatus) for status bar.
-
-## Recompile
-
-You need to recompile dwm after every change you make to its source code
-
-```bash
-cd dwm
-rm -f config.h
-sudo make install
-```
-
