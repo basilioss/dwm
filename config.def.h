@@ -192,6 +192,8 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_w,  setlayout,      {0} },
     /* Toggle floating mode on the active window	*/
     { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+    /* Toggle always-on-top for one floating window    */
+    { MODKEY|ShiftMask,             XK_t,  togglealwaysontop, {0} },
     /* Show all windows	*/
     { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
     /* Move a window to all tags	*/
