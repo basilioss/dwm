@@ -3,30 +3,32 @@
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static const unsigned int gappih    = 9;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 9;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 9;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 9;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 10;        /* horiz inner gap between windows */
+static const unsigned int gappiv    = 10;        /* vert inner gap between windows */
+static const unsigned int gappoh    = 10;        /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 10;        /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int snap      = 15;       /* snap pixel, controls how far the window must be from the
+                                                   window area border until it snaps against that border */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 2;   /* systray spacing */
-static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayspacing = 5;   /* systray spacing */
+static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first 
+                                                   monitor, False: display systray on the last monitor */
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
 
 /* Some app's icons may not work properly with 11-12 font size in the system tray */
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "JoyPixels:pixelsize=13:antialias=true:autohint=true", "monospace:size=13" };
+static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "NotoColorEmoji:pixelsize=18:antialias=true:autohint=true", "monospace:size=13" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=13" ;
 
-static const char norm_fg[] = "#ffffff";
-static const char norm_bg[] = "#151f29";
-static const char norm_border[] = "#233343";
-static const char sel_fg[] = "#5fafff";
-static const char sel_bg[] = "#151f29";
-static const char sel_border[] = "#5fafff";
+static const char norm_fg[] = "#fafafa";
+static const char norm_bg[] = "#1a1b26";
+static const char norm_border[] = "#000000";
+static const char sel_fg[] = "#7aa2f7";
+static const char sel_bg[] = "#1a1b26";
+static const char sel_border[] = "#000000";
 
 static const char *colors[][3]      = {
     /*               fg           bg         border                         */
@@ -38,19 +40,20 @@ static const char *colors[][3]      = {
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7" };
 
 static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
+    /* xprop(1):
+     *  WM_CLASS(STRING) = instance, class
+     *  WM_NAME(STRING) = title
+     */
     /* To get the class name use "xprop | grep WM_CLASS" command */
 
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-    { "Deadbeef",    	 NULL,     NULL,           0,         1,          0,           0,        -1 },
+    /* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+    { "tauonmb",         NULL,     NULL,           0,         1,          0,           0,        -1 },
     { "KeePassXC",       NULL,     NULL,           0,         1,          0,           0,        -1 },
-    { "firefox",		 NULL,     NULL,           1 << 1,    0,          0,          -1,        -1 },
-    { "st",     		 NULL,     NULL,           0,         0,          1,           0,        -1 },
+    { "firefox",         NULL,     NULL,           1 << 1,    0,          0,          -1,        -1 },
+    { "st",              NULL,     NULL,           0,         0,          1,           0,        -1 },
+    { "Alacritty",       NULL,     NULL,           0,         0,          1,           0,        -1 },
     { "TelegramDesktop", NULL,     NULL,           0,         1,          0,           0,        -1 },
-    { NULL,     		 NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+    { NULL,              NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -64,31 +67,31 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 #include "shiftview.c"
 
 static const Layout layouts[] = {
-	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
-	{ "[@]",      spiral },
-	{ "[\\]",     dwindle },
-	{ "H[]",      deck },
-	{ "TTT",      bstack },
-	{ "===",      bstackhoriz },
-	{ "HHH",      grid },
-	{ "###",      nrowgrid },
-	{ "---",      horizgrid },
-	{ ":::",      gaplessgrid },
-	{ "|M|",      centeredmaster },
-	{ ">M>",      centeredfloatingmaster },
-	{ NULL,       NULL },
+    /* symbol     arrange function */
+    { "[]=",      tile },    /* first entry is default */
+    { "><>",      NULL },    /* no layout function means floating behavior */
+    { "[M]",      monocle },
+    { "[@]",      spiral },
+    { "[\\]",     dwindle },
+    { "H[]",      deck },
+    { "TTT",      bstack },
+    { "===",      bstackhoriz },
+    { "HHH",      grid },
+    { "###",      nrowgrid },
+    { "---",      horizgrid },
+    { ":::",      gaplessgrid },
+    { "|M|",      centeredmaster },
+    { ">M>",      centeredfloatingmaster },
+    { NULL,       NULL },
 };
 
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+    { MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+    { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+    { MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+    { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -98,31 +101,32 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont };
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x20", NULL };
+// static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x20", NULL };
+static const char *scratchpadcmd[] = { "alacritty", "-T", scratchpadname, NULL };
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
     /* Dmenu */
-    { Mod1Mask,                       XK_space,      spawn,          {.v = dmenucmd } },
-    /* Lanunch terminal	*/
-    { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+    // { Mod1Mask,                       XK_space,      spawn,          {.v = dmenucmd } },
+    /* Lanunch terminal */
+    // { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     /* Launch scratchpad */
     { MODKEY|ShiftMask,             XK_Return,  togglescratch,  {.v = scratchpadcmd } },
-    /* Toggle status bar	*/
+    /* Toggle status bar    */
     { MODKEY,                       XK_b,      togglebar,      {0} },
-    /* Move to another terminal 	*/
+    /* Move to another terminal     */
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-    /* Move to another ternminal	*/
+    /* Move to another ternminal    */
     { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
     /* Increase the amount of windows in master area */
     { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-    /* Decrease the amount of windows in master area	*/
+    /* Decrease the amount of windows in master area    */
     { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
     /* Make the primary area smaller */
     { MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
     /* Make the primary area larger */
     { MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
-    /* Toggle master and stack	*/
+    /* Toggle master and stack  */
     { MODKEY,                       XK_f,      zoom,           {0} },
     /* Increase all gaps */
     { MODKEY,                       XK_equal,      incrgaps,       {.i = +1 } },
@@ -156,15 +160,15 @@ static const Key keys[] = {
     /* { MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },*/
     /* Reset gaps back to default */
     { MODKEY|ShiftMask,             XK_equal,      defaultgaps,    {0} },
-    /* Cycle through the two last tags	*/
+    /* Cycle through the two last tags  */
     { MODKEY,                       XK_Tab,    view,           {0} },
-    /* Kill a window	*/
+    /* Kill a window    */
     { MODKEY,                       XK_q,      killclient,     {0} },
-    /* Tiled layout	*/
+    /* Tiled layout */
     { MODKEY,                       XK_w,      setlayout,      {.v = &layouts[0]} },
-    /* Floating layout	*/
+    /* Floating layout  */
     { MODKEY,                       XK_e,      setlayout,      {.v = &layouts[1]} },
-    /* Monocle layout	*/
+    /* Monocle layout   */
     { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[2]} },
     /* Spiral layout */
     /* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },*/
@@ -173,7 +177,7 @@ static const Key keys[] = {
     /* Deck layout */
     { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[5]} },
     /* Bstack layout */
-    { MODKEY,                       XK_y,      setlayout,      {.v = &layouts[6]} },
+    /* { MODKEY,                       XK_y,      setlayout,      {.v = &layouts[6]} },*/
     /* Bstackhoriz layout */
     /* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[7]} },*/
     /* Grid layout */
@@ -185,18 +189,18 @@ static const Key keys[] = {
     /* Gaplessgrid layout */
     /* { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[11]} },*/
     /* Centeredmaster layout */
-    { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[12]} },
+    /* { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[12]} },*/
     /* Centeredfloatingmaster layout */
     /* { MODKEY,                     XK_r,      setlayout,      {.v = &layouts[13]} },*/
-    /* Cycle through the two last layouts	*/
-    { MODKEY|ShiftMask,             XK_w,  setlayout,      {0} },
-    /* Toggle floating mode on the active window	*/
+    /* Cycle through the two last layouts   */
+    /*{ MODKEY|ShiftMask,             XK_w,  setlayout,      {0} },*/
+    /* Toggle floating mode on the active window    */
     { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
     /* Toggle always-on-top for one floating window    */
     { MODKEY|ShiftMask,             XK_t,  togglealwaysontop, {0} },
-    /* Show all windows	*/
-    { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-    /* Move a window to all tags	*/
+    /* Show all windows */
+    /* { MODKEY,                       XK_0,      view,           {.ui = ~0 } }, */
+    /* Move a window to all tags    */
     { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
     /* Move focus to the other monitor */
     { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -207,9 +211,9 @@ static const Key keys[] = {
     /* Move the active window to the other monitor */
     { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
     /* Move to the next tag */
-    { MODKEY,            	        XK_n,      shiftview,	   { .i = +1 } },
+    { MODKEY|ShiftMask,             XK_k,      shiftview,      { .i = +1 } },
     /* Move to the previous tag */
-    { MODKEY,                       XK_p,      shiftview,	   { .i = -1 } },
+    { MODKEY|ShiftMask,             XK_j,      shiftview,      { .i = -1 } },
     /* Move floating windows */
     { MODKEY,                       XK_Down,   moveresize,     {.v = "0x 25y 0w 0h" } },
     { MODKEY,                       XK_Up,     moveresize,     {.v = "0x -25y 0w 0h" } },
@@ -240,14 +244,14 @@ static const Key keys[] = {
     TAGKEYS(                        XK_7,                      6)
     TAGKEYS(                        XK_8,                      7)
     TAGKEYS(                        XK_9,                      8)
-    /* Quit DWM	*/
+    /* Quit DWM */
     { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
-	/* click                event mask      button          function        argument */
+    /* click                event mask      button          function        argument */
     /* [left mouse button on layout tag] - cycle through the two last layouts */
     { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
     { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
