@@ -11,7 +11,6 @@
 - [scratchpad](https://dwm.suckless.org/patches/scratchpad/)
 - [swallow](https://dwm.suckless.org/patches/swallow/): this patch helps users spawning a lot of graphical programs from their command line by avoiding cluttering the screen with many unusable terminals
 - [systray](https://dwm.suckless.org/patches/systray/)
-- [truecenteredtitle](https://dwm.suckless.org/patches/truecenteredtitle/): center window title
 - [vanitygaps](https://dwm.suckless.org/patches/vanitygaps/): gaps + tile, bstack, bstackhoriz, centeredmaster, centeredfloatingmaster, deck, fibonacci (dwindle, spiral), grid and nrowgrid layouts.  By default some of them are disabled
 - [shiftview](https://dwm.suckless.org/patches/nextprev/): cycle through tags
 
