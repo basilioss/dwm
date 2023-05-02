@@ -103,8 +103,9 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont };
-static const char *termcmd[]  = { "st", NULL };
+// static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont };
+static const char *dmenucmd[] = { "dmenu-recent-aliases" };
+static const char *termcmd[]  = { "alacritty", NULL };
 static const char scratchpadname[] = "scratchpad";
 // static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x20", NULL };
 static const char *scratchpadcmd[] = { "alacritty", "-T", scratchpadname, NULL };
@@ -112,9 +113,9 @@ static const char *scratchpadcmd[] = { "alacritty", "-T", scratchpadname, NULL }
 static const Key keys[] = {
     /* modifier                     key        function        argument */
     /* Dmenu */
-    // { Mod1Mask,                       XK_space,      spawn,          {.v = dmenucmd } },
+    { Mod1Mask,                       XK_space,      spawn,          {.v = dmenucmd } },
     /* Lanunch terminal */
-    // { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+    { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     /* Launch scratchpad */
     { MODKEY|ShiftMask,             XK_Return,  togglescratch,  {.v = scratchpadcmd } },
     /* Toggle status bar    */
