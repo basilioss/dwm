@@ -26,6 +26,4 @@ cd dwm
 sudo make install
 ```
 
-If you've never compiled dwm before, have a look at this guide: https://github.com/sineemore/suckless-101/.
-
-Optionally install [slstatus](https://github.com/basilioss/slstatus) for status bar.
+If you've never compiled dwm before, have a look at this guide: https://github.com/sineemore/suckless-101
