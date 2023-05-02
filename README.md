@@ -4,7 +4,6 @@
 
 - [alwayscenter](https://dwm.suckless.org/patches/alwayscenter/): center all floating windows
 - [alwaysontop](https://dwm.suckless.org/patches/alwaysontop/): set one floating window to be always-on-top 
-- [hide vacant tags](https://dwm.suckless.org/patches/hide_vacant_tags/)
 - [moveresize](https://dwm.suckless.org/patches/moveresize/): move and resize dwm's floating windows using keyboard bindings
 - [noborder](https://dwm.suckless.org/patches/noborder/): remove the border when there is only one window visible
 - [pertag](https://dwm.suckless.org/patches/pertag/): keeps layout, mwfact, barpos and nmaster per tag
