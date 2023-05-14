@@ -7,6 +7,7 @@
 - [alttagsdecoration](https://dwm.suckless.org/patches/alttagsdecoration/): alternative text for tags which contain at least one window.
 - [moveresize](https://dwm.suckless.org/patches/moveresize/): move and resize dwm's floating windows using keyboard bindings
 - [noborder](https://dwm.suckless.org/patches/noborder/): remove the border when there is only one window visible
+- [notitle](https://dwm.suckless.org/patches/notitle/): remove the title from the bat
 - [pertag](https://dwm.suckless.org/patches/pertag/): keeps layout, mwfact, barpos and nmaster per tag
 - [resizecorners](https://dwm.suckless.org/patches/resizecorners/): resize windows from each corner
 - [scratchpad](https://dwm.suckless.org/patches/scratchpad/)
