@@ -20,7 +20,7 @@ static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
 
 /* Some app's icons may not work properly with 11-12 font size in the system tray */
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "NotoColorEmoji:pixelsize=18:antialias=true:autohint=true", "monospace:size=13" };
+static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:medium:pixelsize=22", "NotoColorEmoji:pixelsize=18:antialias=true:autohint=true", "monospace:size=13" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=13" ;
 
 static const char norm_fg[] = "#fafafa";

@@ -6,6 +6,7 @@
 - [alwayscenter](https://dwm.suckless.org/patches/alwayscenter/): center all floating windows
 - [alwaysontop](https://dwm.suckless.org/patches/alwaysontop/): set one floating window to be always-on-top 
 - [alttagsdecoration](https://dwm.suckless.org/patches/alttagsdecoration/): alternative text for tags which contain at least one window.
+- [autostart](https://dwm.suckless.org/patches/autostart/)
 - [moveresize](https://dwm.suckless.org/patches/moveresize/): move and resize dwm's floating windows using keyboard bindings
 - [noborder](https://dwm.suckless.org/patches/noborder/): remove the border when there is only one window visible
 - [notitle](https://dwm.suckless.org/patches/notitle/): remove the title from the bat
