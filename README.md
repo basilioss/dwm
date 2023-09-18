@@ -10,7 +10,6 @@
 - [noborder](https://dwm.suckless.org/patches/noborder/): remove the border when there is only one window visible
 - [notitle](https://dwm.suckless.org/patches/notitle/): remove the title from the bat
 - [pertag](https://dwm.suckless.org/patches/pertag/): keeps layout, mwfact, barpos and nmaster per tag
-- [resizecorners](https://dwm.suckless.org/patches/resizecorners/): resize windows from each corner
 - [scratchpad](https://dwm.suckless.org/patches/scratchpad/)
 - [swallow](https://dwm.suckless.org/patches/swallow/): this patch helps users spawning a lot of graphical programs from their command line by avoiding cluttering the screen with many unusable terminals
 - [systray](https://dwm.suckless.org/patches/systray/)
