@@ -45,16 +45,18 @@ static const Rule rules[] = {
      *  WM_CLASS(STRING) = instance, class
      *  WM_NAME(STRING) = title
      */
-    /* To get the class name use "xprop | grep WM_CLASS" command */
+    /* To get the class name use "xprop WM_CLASS" command */
 
     /* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-    { "tauonmb",         NULL,     NULL,           0,         1,          0,           0,        -1 },
-    { "KeePassXC",       NULL,     NULL,           0,         1,          0,           0,        -1 },
-    { "firefox",         NULL,     NULL,           1 << 1,    0,          0,          -1,        -1 },
-    { "st",              NULL,     NULL,           0,         0,          1,           0,        -1 },
-    { "Alacritty",       NULL,     NULL,           0,         0,          1,           0,        -1 },
-    { "TelegramDesktop", NULL,     NULL,           0,         1,          0,           0,        -1 },
-    { NULL,              NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+    { "tauonmb",          NULL,     NULL,           0,         1,          0,           0,        -1 },
+    { "KeePassXC",        NULL,     NULL,           0,         1,          0,           0,        -1 },
+    { "transmission-gtk", NULL,     NULL,           0,         1,          0,           0,        -1 },
+    { "firefox",          NULL,     NULL,           1 << 1,    0,          0,          -1,        -1 },
+    { "st",               NULL,     NULL,           0,         0,          1,           0,        -1 },
+    { "Alacritty",        NULL,     NULL,           0,         0,          1,           0,        -1 },
+    { "TelegramDesktop",  NULL,     NULL,           0,         1,          0,           0,        -1 },
+    { "Blueman-manager",  NULL,     NULL,           0,         1,          0,           0,        -1 },
+    { NULL,               NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -101,6 +103,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 // static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont };
 static const char *dmenucmd[] = { "dmenu-recent-aliases" };
+
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char scratchpadname[] = "scratchpad";
 // static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x20", NULL };
@@ -199,7 +202,9 @@ static const Key keys[] = {
     /* Toggle floating mode on the active window    */
     { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
     /* Toggle always-on-top for one floating window    */
-    { MODKEY|ShiftMask,             XK_t,  togglealwaysontop, {0} },
+    { MODKEY|ShiftMask,             XK_p,  togglealwaysontop, {0} },
+    /* Toggl full screen */
+    { MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
     /* Show all windows */
     /* { MODKEY,                       XK_0,      view,           {.ui = ~0 } }, */
     /* Move a window to all tags    */

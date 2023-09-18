@@ -2,6 +2,7 @@
 
 ## Patches
 
+- [actualfullscreen](https://dwm.suckless.org/patches/actualfullscreen/): toggle fullscreen for a window
 - [alwayscenter](https://dwm.suckless.org/patches/alwayscenter/): center all floating windows
 - [alwaysontop](https://dwm.suckless.org/patches/alwaysontop/): set one floating window to be always-on-top 
 - [alttagsdecoration](https://dwm.suckless.org/patches/alttagsdecoration/): alternative text for tags which contain at least one window.
